@@ -271,21 +271,21 @@ public class Account {
         return role;
     }
 
-//    @Override
-//    public boolean equals(Object obj) {
-//        if (!(obj instanceof Account))
-//            return false;
-//
-//        if (obj == this)
-//            return true;
-//
-//        Account acc = (Account) obj;
-//
-//        return this.getId() != null && acc.getId() != null && this.getId().equals(acc.getId());
-//    }
-//
-//    @Override
-//    public int hashCode() {
-//        return this.getId() == null ? super.hashCode() : this.getId();
-//    }
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof Account))
+            return false;
+
+        if (obj == this)
+            return true;
+
+        Account acc = (Account) obj;
+
+        return this.getId() != null && acc.getId() != null && this.getId().equals(acc.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return this.getId() == null ? super.hashCode() : this.getId();
+    }
 }

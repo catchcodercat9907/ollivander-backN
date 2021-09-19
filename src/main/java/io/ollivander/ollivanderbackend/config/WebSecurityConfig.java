@@ -1,6 +1,7 @@
 package io.ollivander.ollivanderbackend.config;
 
-import io.ollivander.ollivanderbackend.security.AuthEntryPointJwt;
+import io.ollivander.ollivanderbackend.model.ApiConst;
+import io.ollivander.ollivanderbackend.security.RestAuthenticationEntryPoint;
 import io.ollivander.ollivanderbackend.security.AuthTokenFilter;
 import io.ollivander.ollivanderbackend.security.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +27,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private UserDetailsServiceImpl userDetailsService;
 
     @Autowired
-    private AuthEntryPointJwt authEntryPointJwt;
+    private RestAuthenticationEntryPoint authEntryPointJwt;
 
     @Bean
     public AuthTokenFilter authenticationJwtTokenFilter() {
@@ -52,10 +53,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                .cors()
-                .and()
-                .csrf()// avoid CSRF(Cross Site Request Forgery)
-                .disable()
+                .cors().and().csrf().disable()// avoid CORS and CSRF(Cross Site Request Forgery)
+                .httpBasic().disable()
                 .exceptionHandling()
                 .authenticationEntryPoint(authEntryPointJwt)
                 .and()
@@ -63,9 +62,19 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
+                .antMatchers(ApiConst.LOGIN_URL, ApiConst.PUBLIC_URL, ApiConst.LOGOUT_URL).permitAll()
                 .antMatchers("/api/auth/**").permitAll()
                 .antMatchers("/api/test/**").permitAll()
-                .anyRequest().authenticated();
+
+                // defined Admin only API area
+                .antMatchers("/admin/**").hasRole("ADMIN")
+
+                // all other request need to be authenticated
+                .anyRequest().fullyAuthenticated()
+
+                .and()
+                // logout handler
+				.logout().logoutUrl(ApiConst.LOGOUT_URL).invalidateHttpSession(false);
         http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
     }
 }

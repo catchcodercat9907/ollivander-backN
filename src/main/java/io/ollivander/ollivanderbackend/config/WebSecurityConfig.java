@@ -69,6 +69,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 // defined Admin only API area
                 .antMatchers("/admin/**").hasRole("ADMIN")
 
+                //temporary permit access /product
+                .antMatchers("/product/**").permitAll()
+
                 // all other request need to be authenticated
                 .anyRequest().fullyAuthenticated()
 

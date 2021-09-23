@@ -15,7 +15,7 @@ public class AccountInfo {
     private Integer id;
 
     @ManyToOne()
-    @JoinColumn(name = "accountId", nullable = false)
+    @JoinColumn(name = "account_id", nullable = false)
     private Account account;
 
     @Column(name = "firstName")
@@ -55,6 +55,7 @@ public class AccountInfo {
     private String intro;
 
     @Column(name = "profile")
+    @Lob
     private String profile;
 
     public AccountInfo() {

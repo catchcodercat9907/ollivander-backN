@@ -1,5 +1,7 @@
 package io.ollivander.ollivanderbackend.model.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.HashSet;
@@ -14,7 +16,7 @@ public class Product {
     private Integer id;
 
     @ManyToOne()
-    @JoinColumn(name = "accountId", nullable = false)
+    @JoinColumn(name = "account_id", nullable = false)
     private Account account;
 
     @Column(name = "title")
@@ -29,7 +31,7 @@ public class Product {
     @Column(name = "summary")
     private String summary;
 
-    @Column(name = "type")
+    @Column(name = "type", columnDefinition = "SMALLINT")
     private Integer type;
 
     @Column(name = "sku")
@@ -41,10 +43,10 @@ public class Product {
     @Column(name = "discount")
     private Float discount;
 
-    @Column(name = "quantity")
+    @Column(name = "quantity", columnDefinition = "SMALLINT")
     private Integer quantity;
 
-    @Column(name = "shop")
+    @Column(name = "shop", columnDefinition = "TINYINT")
     private Boolean shop;
 
     @Column(name = "createdAt")
@@ -63,18 +65,19 @@ public class Product {
     private Date endsAt;
 
     @Column(name = "content")
+    @Lob
     private String content;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "product_category", joinColumns = {
-            @JoinColumn(name = "productId", nullable = false, updatable = true) }, inverseJoinColumns = {
-            @JoinColumn(name = "categoryId", nullable = false, updatable = true) })
+            @JoinColumn(name = "product_id", nullable = false, updatable = true) }, inverseJoinColumns = {
+            @JoinColumn(name = "category_id", nullable = false, updatable = true) })
     private Set<Category> categories = new HashSet<>();
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "product_tag", joinColumns = {
-            @JoinColumn(name = "productId", nullable = false, updatable = true) }, inverseJoinColumns = {
-            @JoinColumn(name = "tagId", nullable = false, updatable = true) })
+            @JoinColumn(name = "product_id", nullable = false, updatable = true) }, inverseJoinColumns = {
+            @JoinColumn(name = "tag_id", nullable = false, updatable = true) })
     private Set<Tag> tags = new HashSet<>();
 
     public Product() {

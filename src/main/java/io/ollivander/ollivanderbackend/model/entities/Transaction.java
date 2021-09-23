@@ -12,23 +12,23 @@ public class Transaction {
     private Integer id;
 
     @ManyToOne()
-    @JoinColumn(name = "accountId", nullable = false)
+    @JoinColumn(name = "account_id", nullable = false)
     private Account account;
 
     @ManyToOne()
-    @JoinColumn(name = "orderId", nullable = false)
-    private Order order;
+    @JoinColumn(name = "orders_id", nullable = false)
+    private Orders orders;
 
     @Column(name = "code")
     private String code;
 
-    @Column(name = "type")
+    @Column(name = "type", columnDefinition = "SMALLINT")
     private Integer type;
 
-    @Column(name = "mode")
+    @Column(name = "mode", columnDefinition = "SMALLINT")
     private Integer mode;
 
-    @Column(name = "status")
+    @Column(name = "status", columnDefinition = "SMALLINT")
     private Integer status;
 
     @Column(name = "createdAt")
@@ -38,15 +38,16 @@ public class Transaction {
     private Date updatedAt;
 
     @Column(name = "content")
+    @Lob
     private String content;
 
     public Transaction() {
     }
 
-    public Transaction(Integer id, Account account, Order order, String code, Integer type, Integer mode, Integer status, Date createdAt, Date updatedAt, String content) {
+    public Transaction(Integer id, Account account, Orders orders, String code, Integer type, Integer mode, Integer status, Date createdAt, Date updatedAt, String content) {
         this.id = id;
         this.account = account;
-        this.order = order;
+        this.orders = orders;
         this.code = code;
         this.type = type;
         this.mode = mode;
@@ -72,12 +73,12 @@ public class Transaction {
         this.account = account;
     }
 
-    public Order getOrder() {
-        return order;
+    public Orders getOrder() {
+        return orders;
     }
 
-    public void setOrder(Order order) {
-        this.order = order;
+    public void setOrder(Orders orders) {
+        this.orders = orders;
     }
 
     public String getCode() {

@@ -10,7 +10,7 @@ public class Category {
     @Column(name = "id", unique = true, nullable = false)
     private Integer id;
 
-    @Column(name = "parentId")
+    @Column(name = "parent_id")
     private Integer parentId;
 
     @Column(name = "title")
@@ -23,6 +23,7 @@ public class Category {
     private String slug;
 
     @Column(name = "content")
+    @Lob
     private String content;
 
     public Category() {

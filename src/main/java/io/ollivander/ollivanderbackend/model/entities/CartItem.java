@@ -12,11 +12,11 @@ public class CartItem {
     private Integer id;
 
     @ManyToOne()
-    @JoinColumn(name = "cartId", nullable = false)
+    @JoinColumn(name = "cart_id", nullable = false)
     private Cart cart;
 
     @ManyToOne()
-    @JoinColumn(name = "productId", nullable = false)
+    @JoinColumn(name = "product_id", nullable = false)
     private Product product;
 
     @Column(name = "sku")
@@ -28,10 +28,10 @@ public class CartItem {
     @Column(name = "discount")
     private Float discount;
 
-    @Column(name = "quantity")
+    @Column(name = "quantity", columnDefinition = "SMALLINT")
     private Integer quantity;
 
-    @Column(name = "active")
+    @Column(name = "active", columnDefinition = "TINYINT")
     private Boolean active;
 
     @Column(name = "createdAt")
@@ -41,6 +41,7 @@ public class CartItem {
     private Date updatedAt;
 
     @Column(name = "content")
+    @Lob
     private String content;
 
     public CartItem() {

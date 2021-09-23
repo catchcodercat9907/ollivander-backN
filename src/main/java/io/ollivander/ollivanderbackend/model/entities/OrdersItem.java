@@ -4,19 +4,19 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name = "order_item")
-public class OderItem {
+@Table(name = "orders_item")
+public class OrdersItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", unique = true, nullable = false)
     private Integer id;
 
     @ManyToOne()
-    @JoinColumn(name = "orderId", nullable = false)
-    private Order order;
+    @JoinColumn(name = "order_id", nullable = false)
+    private Orders orders;
 
     @ManyToOne()
-    @JoinColumn(name = "productId", nullable = false)
+    @JoinColumn(name = "product_id", nullable = false)
     private Product product;
 
     @Column(name = "sku")
@@ -28,7 +28,7 @@ public class OderItem {
     @Column(name = "discount")
     private Float discount;
 
-    @Column(name = "quantity")
+    @Column(name = "quantity", columnDefinition = "SMALLINT")
     private Integer quantity;
 
     @Column(name = "createdAt")
@@ -38,14 +38,15 @@ public class OderItem {
     private Date updatedAt;
 
     @Column(name = "content")
+    @Lob
     private String content;
 
-    public OderItem() {
+    public OrdersItem() {
     }
 
-    public OderItem(Integer id, Order order, Product product, String sku, Float price, Float discount, Integer quantity, Date createdAt, Date updatedAt, String content) {
+    public OrdersItem(Integer id, Orders orders, Product product, String sku, Float price, Float discount, Integer quantity, Date createdAt, Date updatedAt, String content) {
         this.id = id;
-        this.order = order;
+        this.orders = orders;
         this.product = product;
         this.sku = sku;
         this.price = price;
@@ -64,12 +65,12 @@ public class OderItem {
         this.id = id;
     }
 
-    public Order getOrder() {
-        return order;
+    public Orders getOrder() {
+        return orders;
     }
 
-    public void setOrder(Order order) {
-        this.order = order;
+    public void setOrder(Orders orders) {
+        this.orders = orders;
     }
 
     public Product getProduct() {

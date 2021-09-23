@@ -4,24 +4,24 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name = "order")
-public class Order {
+@Table(name = "orders")
+public class Orders {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", unique = true, nullable = false)
     private Integer id;
 
     @ManyToOne()
-    @JoinColumn(name = "accountId", nullable = false)
+    @JoinColumn(name = "account_id", nullable = false)
     private Account account;
 
-    @Column(name = "sessionId")
-    private Integer sessionId;
+    @Column(name = "session_id")
+    private String sessionId;
 
     @Column(name = "token")
     private String token;
 
-    @Column(name = "status")
+    @Column(name = "status", columnDefinition = "SMALLINT")
     private Integer status;
 
     @Column(name = "subTotal")
@@ -55,12 +55,13 @@ public class Order {
     private Date updatedAt;
 
     @Column(name = "content")
+    @Lob
     private String content;
 
-    public Order() {
+    public Orders() {
     }
 
-    public Order(Integer id, Account account, Integer sessionId, String token, Integer status, Float subTotal, Float itemDiscount, Float tax, Float shipping, Float total, String promo, Float discount, Float grandTotal, Date createdAt, Date updatedAt, String content) {
+    public Orders(Integer id, Account account, String sessionId, String token, Integer status, Float subTotal, Float itemDiscount, Float tax, Float shipping, Float total, String promo, Float discount, Float grandTotal, Date createdAt, Date updatedAt, String content) {
         this.id = id;
         this.account = account;
         this.sessionId = sessionId;
@@ -95,11 +96,11 @@ public class Order {
         this.account = account;
     }
 
-    public Integer getSessionId() {
+    public String getSessionId() {
         return sessionId;
     }
 
-    public void setSessionId(Integer sessionId) {
+    public void setSessionId(String sessionId) {
         this.sessionId = sessionId;
     }
 

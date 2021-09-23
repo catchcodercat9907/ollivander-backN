@@ -21,6 +21,7 @@ public class Tag {
     private String slug;
 
     @Column(name = "content")
+    @Lob
     private String content;
 
     public Tag() {

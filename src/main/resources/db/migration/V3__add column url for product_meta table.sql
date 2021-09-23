@@ -1,0 +1,1 @@
+call add_col('product_meta', 'url', 'VARCHAR(255) null default null');

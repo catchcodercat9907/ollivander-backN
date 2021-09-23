@@ -12,16 +12,16 @@ public class Cart {
     private Integer id;
 
     @ManyToOne()
-    @JoinColumn(name = "accountId", nullable = false)
+    @JoinColumn(name = "account_id", nullable = false)
     private Account account;
 
-    @Column(name = "sessionId")
-    private Integer sessionId;
+    @Column(name = "session_id")
+    private String sessionId;
 
     @Column(name = "token")
     private String token;
 
-    @Column(name = "status")
+    @Column(name = "status", columnDefinition = "SMALLINT")
     private Integer status;
 
     @Column(name = "createdAt")
@@ -31,12 +31,13 @@ public class Cart {
     private Date updatedAt;
 
     @Column(name = "content")
+    @Lob
     private String content;
 
     public Cart() {
     }
 
-    public Cart(Integer id, Account account, Integer sessionId, String token, Integer status, Date createdAt, Date updatedAt, String content) {
+    public Cart(Integer id, Account account, String sessionId, String token, Integer status, Date createdAt, Date updatedAt, String content) {
         this.id = id;
         this.account = account;
         this.sessionId = sessionId;
@@ -63,11 +64,11 @@ public class Cart {
         this.account = account;
     }
 
-    public Integer getSessionId() {
+    public String getSessionId() {
         return sessionId;
     }
 
-    public void setSessionId(Integer sessionId) {
+    public void setSessionId(String sessionId) {
         this.sessionId = sessionId;
     }
 

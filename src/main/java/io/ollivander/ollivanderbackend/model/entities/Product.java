@@ -1,20 +1,25 @@
 package io.ollivander.ollivanderbackend.model.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import io.ollivander.ollivanderbackend.model.DbConst;
+import io.ollivander.ollivanderbackend.utils.DataTransferObjectHelper;
 
 import javax.persistence.*;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Table(name = "product")
 public class Product {
+
+    public static final String[] BASIC_PROPS = {DbConst.ID, DbConst.TITLE, DbConst.META_TITLE, DbConst.SLUG,
+            DbConst.TYPE, DbConst.PRICE, DbConst.DISCOUNT, DbConst.QUANTITY, DbConst.SHOP, DbConst.URL,
+            DbConst.UPDATED_AT, DbConst.PUBLISHED_AT, DbConst.STARTS_AT, DbConst.ENDS_AT};
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", unique = true, nullable = false)
     private Integer id;
 
+    @JsonIgnore
     @ManyToOne()
     @JoinColumn(name = "account_id", nullable = false)
     private Account account;
@@ -70,20 +75,20 @@ public class Product {
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "product_category", joinColumns = {
-            @JoinColumn(name = "product_id", nullable = false, updatable = true) }, inverseJoinColumns = {
-            @JoinColumn(name = "category_id", nullable = false, updatable = true) })
+            @JoinColumn(name = "product_id", nullable = false, updatable = true)}, inverseJoinColumns = {
+            @JoinColumn(name = "category_id", nullable = false, updatable = true)})
     private Set<Category> categories = new HashSet<>();
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "product_tag", joinColumns = {
-            @JoinColumn(name = "product_id", nullable = false, updatable = true) }, inverseJoinColumns = {
-            @JoinColumn(name = "tag_id", nullable = false, updatable = true) })
+            @JoinColumn(name = "product_id", nullable = false, updatable = true)}, inverseJoinColumns = {
+            @JoinColumn(name = "tag_id", nullable = false, updatable = true)})
     private Set<Tag> tags = new HashSet<>();
 
-    public Product() {
-    }
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    private Set<ProductMeta> productMeta;
 
-    public Product(Integer id, Account account, String title, String metaTitle, String slug, String summary, Integer type, String sku, Float price, Float discount, Integer quantity, Boolean shop, Date createdAt, Date updatedAt, Date publishedAt, Date startsAt, Date endsAt, String content) {
+    public Product(Integer id, Account account, String title, String metaTitle, String slug, String summary, Integer type, String sku, Float price, Float discount, Integer quantity, Boolean shop, Date createdAt, Date updatedAt, Date publishedAt, Date startsAt, Date endsAt, String content, Set<Category> categories, Set<Tag> tags, Set<ProductMeta> productMeta) {
         this.id = id;
         this.account = account;
         this.title = title;
@@ -102,6 +107,26 @@ public class Product {
         this.startsAt = startsAt;
         this.endsAt = endsAt;
         this.content = content;
+        this.categories = categories;
+        this.tags = tags;
+        this.productMeta = productMeta;
+    }
+
+    public Product() {
+    }
+
+    @Transient
+    public Map<Object, Object> toSimpleObject() {
+        Map<Object, Object> mProduct = DataTransferObjectHelper.simplify(this, BASIC_PROPS);
+        return mProduct;
+    }
+
+    public Set<ProductMeta> getProductMeta() {
+        return productMeta;
+    }
+
+    public void setProductMeta(Set<ProductMeta> productMeta) {
+        this.productMeta = productMeta;
     }
 
     public Integer getId() {

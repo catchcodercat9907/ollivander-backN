@@ -78,6 +78,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 // logout handler
 				.logout().logoutUrl(ApiConst.LOGOUT_URL).invalidateHttpSession(false);
+
+        // When user login, role XX.
+        // But access to the page requires the YY role,
+        // An AccessDeniedException will be thrown.
+        http.authorizeRequests().and().exceptionHandling().accessDeniedPage("/403");
         http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
     }
 }

@@ -38,23 +38,10 @@ public class MySqlConfig {
     @Autowired
     private JobRepository jobRegistry;
 
-//    @Bean
-//    public JobLauncher jobLauncher() {
-//        SimpleJobLauncher launcher = new SimpleJobLauncher();
-//        launcher.setTaskExecutor(new SimpleAsyncTaskExecutor());
-//        launcher.setJobRepository(jobRegistry);
-//        return launcher;
-//    }
-
     @Bean
     public OllivanderBatchJobManager batchJobManager() {
         return new OllivanderBatchJobManager();
     }
-
-//    @Bean
-//    public EvaluationContextExtension securityExtension() {
-//        return new SecurityEvaluationContextExtension();
-//    }
 
     /**
      * We need Flyway to already have been created, do its thing before the
@@ -118,19 +105,6 @@ public class MySqlConfig {
 
         return dataSource;
     }
-
-    /**
-     * @author hungmeo
-     * @return
-     * @throws SQLException
-     */
-//    @Bean
-//    public PlatformTransactionManager transactionManager() throws Exception {
-//        final JpaTransactionManager transactionManager = new JpaTransactionManager();
-//        transactionManager.setEntityManagerFactory(entityManagerFactory().getObject());
-//
-//        return transactionManager;
-//    }
 
     @Bean
     public PersistenceExceptionTranslationPostProcessor exceptionTranslation() {

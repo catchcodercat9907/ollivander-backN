@@ -1,2 +1,4 @@
-package io.ollivander.ollivanderbackend.services.shopping;public interface ShoppingService {
+package io.ollivander.ollivanderbackend.services.shopping;
+
+public interface ShoppingService {
 }

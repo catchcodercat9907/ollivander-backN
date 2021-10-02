@@ -25,28 +25,28 @@ public class Orders {
     private Integer status;
 
     @Column(name = "subTotal")
-    private Float subTotal;
+    private Double subTotal;
 
     @Column(name = "itemDiscount")
-    private Float itemDiscount;
+    private Double itemDiscount;
 
     @Column(name = "tax")
-    private Float tax;
+    private Double tax;
 
     @Column(name = "shipping")
-    private Float shipping;
+    private Double shipping;
 
     @Column(name = "total")
-    private Float total;
+    private Double total;
 
     @Column(name = "promo")
     private String promo;
 
     @Column(name = "discount")
-    private Float discount;
+    private Double discount;
 
     @Column(name = "grandTotal")
-    private Float grandTotal;
+    private Double grandTotal;
 
     @Column(name = "createdAt")
     private Date createdAt;
@@ -61,7 +61,7 @@ public class Orders {
     public Orders() {
     }
 
-    public Orders(Integer id, Account account, String sessionId, String token, Integer status, Float subTotal, Float itemDiscount, Float tax, Float shipping, Float total, String promo, Float discount, Float grandTotal, Date createdAt, Date updatedAt, String content) {
+    public Orders(Integer id, Account account, String sessionId, String token, Integer status, Double subTotal, Double itemDiscount, Double tax, Double shipping, Double total, String promo, Double discount, Double grandTotal, Date createdAt, Date updatedAt, String content) {
         this.id = id;
         this.account = account;
         this.sessionId = sessionId;
@@ -120,43 +120,43 @@ public class Orders {
         this.status = status;
     }
 
-    public Float getSubTotal() {
+    public Double getSubTotal() {
         return subTotal;
     }
 
-    public void setSubTotal(Float subTotal) {
+    public void setSubTotal(Double subTotal) {
         this.subTotal = subTotal;
     }
 
-    public Float getItemDiscount() {
+    public Double getItemDiscount() {
         return itemDiscount;
     }
 
-    public void setItemDiscount(Float itemDiscount) {
+    public void setItemDiscount(Double itemDiscount) {
         this.itemDiscount = itemDiscount;
     }
 
-    public Float getTax() {
+    public Double getTax() {
         return tax;
     }
 
-    public void setTax(Float tax) {
+    public void setTax(Double tax) {
         this.tax = tax;
     }
 
-    public Float getShipping() {
+    public Double getShipping() {
         return shipping;
     }
 
-    public void setShipping(Float shipping) {
+    public void setShipping(Double shipping) {
         this.shipping = shipping;
     }
 
-    public Float getTotal() {
+    public Double getTotal() {
         return total;
     }
 
-    public void setTotal(Float total) {
+    public void setTotal(Double total) {
         this.total = total;
     }
 
@@ -168,19 +168,19 @@ public class Orders {
         this.promo = promo;
     }
 
-    public Float getDiscount() {
+    public Double getDiscount() {
         return discount;
     }
 
-    public void setDiscount(Float discount) {
+    public void setDiscount(Double discount) {
         this.discount = discount;
     }
 
-    public Float getGrandTotal() {
+    public Double getGrandTotal() {
         return grandTotal;
     }
 
-    public void setGrandTotal(Float grandTotal) {
+    public void setGrandTotal(Double grandTotal) {
         this.grandTotal = grandTotal;
     }
 

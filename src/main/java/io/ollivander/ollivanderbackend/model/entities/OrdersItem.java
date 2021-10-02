@@ -23,10 +23,10 @@ public class OrdersItem {
     private String sku;
 
     @Column(name = "price")
-    private Float price;
+    private Double price;
 
     @Column(name = "discount")
-    private Float discount;
+    private Double discount;
 
     @Column(name = "quantity", columnDefinition = "SMALLINT")
     private Integer quantity;
@@ -44,7 +44,7 @@ public class OrdersItem {
     public OrdersItem() {
     }
 
-    public OrdersItem(Integer id, Orders orders, Product product, String sku, Float price, Float discount, Integer quantity, Date createdAt, Date updatedAt, String content) {
+    public OrdersItem(Integer id, Orders orders, Product product, String sku, Double price, Double discount, Integer quantity, Date createdAt, Date updatedAt, String content) {
         this.id = id;
         this.orders = orders;
         this.product = product;
@@ -89,19 +89,19 @@ public class OrdersItem {
         this.sku = sku;
     }
 
-    public Float getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(Float price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 
-    public Float getDiscount() {
+    public Double getDiscount() {
         return discount;
     }
 
-    public void setDiscount(Float discount) {
+    public void setDiscount(Double discount) {
         this.discount = discount;
     }
 

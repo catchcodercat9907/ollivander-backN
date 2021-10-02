@@ -43,10 +43,10 @@ public class Product {
     private String sku;
 
     @Column(name = "price")
-    private Float price;
+    private Double price;
 
     @Column(name = "discount")
-    private Float discount;
+    private Double discount;
 
     @Column(name = "quantity", columnDefinition = "SMALLINT")
     private Integer quantity;
@@ -88,7 +88,7 @@ public class Product {
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private Set<ProductMeta> productMeta;
 
-    public Product(Integer id, Account account, String title, String metaTitle, String slug, String summary, Integer type, String sku, Float price, Float discount, Integer quantity, Boolean shop, Date createdAt, Date updatedAt, Date publishedAt, Date startsAt, Date endsAt, String content, Set<Category> categories, Set<Tag> tags, Set<ProductMeta> productMeta) {
+    public Product(Integer id, Account account, String title, String metaTitle, String slug, String summary, Integer type, String sku, Double price, Double discount, Integer quantity, Boolean shop, Date createdAt, Date updatedAt, Date publishedAt, Date startsAt, Date endsAt, String content, Set<Category> categories, Set<Tag> tags, Set<ProductMeta> productMeta) {
         this.id = id;
         this.account = account;
         this.title = title;
@@ -193,19 +193,19 @@ public class Product {
         this.sku = sku;
     }
 
-    public Float getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(Float price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 
-    public Float getDiscount() {
+    public Double getDiscount() {
         return discount;
     }
 
-    public void setDiscount(Float discount) {
+    public void setDiscount(Double discount) {
         this.discount = discount;
     }
 
@@ -287,5 +287,20 @@ public class Product {
 
     public void setTags(Set<Tag> tags) {
         this.tags = tags;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Product product = (Product) o;
+
+        return id.equals(product.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return id.hashCode();
     }
 }

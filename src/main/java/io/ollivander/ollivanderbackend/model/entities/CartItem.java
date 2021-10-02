@@ -23,10 +23,10 @@ public class CartItem {
     private String sku;
 
     @Column(name = "price")
-    private Float price;
+    private Double price;
 
     @Column(name = "discount")
-    private Float discount;
+    private Double discount;
 
     @Column(name = "quantity", columnDefinition = "SMALLINT")
     private Integer quantity;
@@ -47,7 +47,7 @@ public class CartItem {
     public CartItem() {
     }
 
-    public CartItem(Integer id, Cart cart, Product product, String sku, Float price, Float discount, Integer quantity, Boolean active, Date createdAt, Date updatedAt, String content) {
+    public CartItem(Integer id, Cart cart, Product product, String sku, Double price, Double discount, Integer quantity, Boolean active, Date createdAt, Date updatedAt, String content) {
         this.id = id;
         this.cart = cart;
         this.product = product;
@@ -93,19 +93,19 @@ public class CartItem {
         this.sku = sku;
     }
 
-    public Float getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(Float price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 
-    public Float getDiscount() {
+    public Double getDiscount() {
         return discount;
     }
 
-    public void setDiscount(Float discount) {
+    public void setDiscount(Double discount) {
         this.discount = discount;
     }
 

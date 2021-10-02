@@ -20,16 +20,16 @@ public class ProductController {
     ProductServiceImpl productSv;
 
     @GetMapping()
-    public ResponseEntity<?> getAllProduct(BaseListRequest request) {
-        ResponseObject<Object> response = new ResponseObject<>();
+    public ResponseEntity<Object> getAllProduct(BaseListRequest request) {
+        ResponseObject<Object> response = new ResponseObject<Object>();
         Object product = productSv.getAllProducts(request);
         response.setResponseData(product);
         return new ResponseEntity<Object>(response, new HttpHeaders(), HttpStatus.OK);
     }
 
     @GetMapping("/{productId}")
-    public ResponseEntity<?> getProduct(@PathVariable(name = "productId") Integer productId) {
-        ResponseObject<Object> response = new ResponseObject<>();
+    public ResponseEntity<Object> getProduct(@PathVariable(name = "productId") Integer productId) {
+        ResponseObject<Object> response = new ResponseObject<Object>();
         try {
             Object product = productSv.getProductById(productId);
             response.setResponseData(product);

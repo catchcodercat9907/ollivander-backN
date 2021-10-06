@@ -1,69 +1,31 @@
-package io.ollivander.ollivanderbackend.model.entities;
+package io.ollivander.ollivanderbackend.model.dto;
 
-import javax.persistence.*;
 import java.util.Date;
 
-@Entity
-@Table(name = "orders")
-public class Orders {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", unique = true, nullable = false)
+public class OrdersResponse {
     private Integer id;
-
-    @ManyToOne()
-    @JoinColumn(name = "account_id", nullable = false)
-    private Account account;
-
-    @Column(name = "session_id")
+    private Integer accountId;
     private String sessionId;
-
-    @Column(name = "token")
     private String token;
-
-    @Column(name = "status", columnDefinition = "SMALLINT")
-    private Integer status; // status of the Orders such as: new, checkout, paid, shipped, ...
-
-    @Column(name = "subTotal")
-    private Double subTotal;    // total price of Orders Items
-
-    @Column(name = "itemDiscount")
-    private Double itemDiscount;    // total discount of Orders Items
-
-    @Column(name = "tax")
+    private Integer status;
+    private Double subTotal;
+    private Double itemDiscount;
     private Double tax;
-
-    @Column(name = "shipping")
     private Double shipping;
-
-    @Column(name = "total")
-    private Double total;   // total include tax + shipping, exclude discount
-
-    @Column(name = "promo")
-    private String promo;   // promo code of the Order  VD: apply code KM1 to discount 50% for grand total
-
-    @Column(name = "discount")
+    private Double total;
+    private String promo;
     private Double discount;
-
-    @Column(name = "grandTotal")
     private Double grandTotal;
-
-    @Column(name = "createdAt")
     private Date createdAt;
-
-    @Column(name = "updatedAt")
     private Date updatedAt;
-
-    @Column(name = "content")
-    @Lob
     private String content;
 
-    public Orders() {
+    public OrdersResponse() {
     }
 
-    public Orders(Integer id, Account account, String sessionId, String token, Integer status, Double subTotal, Double itemDiscount, Double tax, Double shipping, Double total, String promo, Double discount, Double grandTotal, Date createdAt, Date updatedAt, String content) {
+    public OrdersResponse(Integer id, Integer accountId, String sessionId, String token, Integer status, Double subTotal, Double itemDiscount, Double tax, Double shipping, Double total, String promo, Double discount, Double grandTotal, Date createdAt, Date updatedAt, String content) {
         this.id = id;
-        this.account = account;
+        this.accountId = accountId;
         this.sessionId = sessionId;
         this.token = token;
         this.status = status;
@@ -88,12 +50,12 @@ public class Orders {
         this.id = id;
     }
 
-    public Account getAccount() {
-        return account;
+    public Integer getAccountId() {
+        return accountId;
     }
 
-    public void setAccount(Account account) {
-        this.account = account;
+    public void setAccountId(Integer accountId) {
+        this.accountId = accountId;
     }
 
     public String getSessionId() {

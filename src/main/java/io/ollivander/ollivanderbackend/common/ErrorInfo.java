@@ -60,4 +60,7 @@ public class ErrorInfo {
     public static final ErrorInfo PRODUCT_NOT_FOUND = new ErrorInfo(1,
             properties.getProperty("product.not.found"));
 
+    public static final ErrorInfo ACCOUNT_NOT_FOUND = new ErrorInfo(1,
+            properties.getProperty("account.not.found"));
+
 }

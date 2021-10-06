@@ -1,20 +1,35 @@
 package io.ollivander.ollivanderbackend.services.shopping;
 
+import io.ollivander.ollivanderbackend.common.BaseException;
+import io.ollivander.ollivanderbackend.common.ErrorInfo;
 import io.ollivander.ollivanderbackend.common.NotEnoughProductsInStockException;
-import io.ollivander.ollivanderbackend.model.entities.Product;
+import io.ollivander.ollivanderbackend.model.dto.CartItemRequest;
+import io.ollivander.ollivanderbackend.model.dto.CartItemResponse;
+import io.ollivander.ollivanderbackend.model.dto.CartResponse;
+import io.ollivander.ollivanderbackend.model.dto.OrdersResponse;
+import io.ollivander.ollivanderbackend.model.entities.*;
+import io.ollivander.ollivanderbackend.model.repos.CartRepository;
+import io.ollivander.ollivanderbackend.model.repos.OrdersRepository;
 import io.ollivander.ollivanderbackend.model.repos.ProductRepository;
+import io.ollivander.ollivanderbackend.utils.SecurityContextHelper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
+@Service
 public class ShoppingServiceImpl implements ShoppingService {
 
     private Map<Product, Integer> products = new HashMap<>();
 
     @Autowired
     private ProductRepository productRepository;
+
+    @Autowired
+    private CartRepository cartRepo;
+
+    @Autowired
+    private OrdersRepository ordersRepo;
 
     @Override
     public void addProduct(Product product) {
@@ -59,6 +74,40 @@ public class ShoppingServiceImpl implements ShoppingService {
     @Override
     public Double getTotal() {
 
+        return null;
+    }
+
+    @Override
+    public CartResponse getAccountCart(Account account) throws BaseException {
+        account = SecurityContextHelper.getCurrentAccount();
+        if (account == null) {
+            throw new BaseException(ErrorInfo.ACCOUNT_NOT_FOUND);
+        }
+        CartResponse response = cartRepo.getAccountCart(account.getId());
+
+        return response;
+    }
+
+    public CartItemResponse getAccountCartItem(Account account) throws BaseException {
+        return null;
+    }
+
+    @Override
+    public CartResponse createCart(Account account) {
+        return new CartResponse();
+    }
+
+    @Override
+    public OrdersResponse createOrders(List<CartItemRequest> request) {
+        Account account = SecurityContextHelper.getCurrentAccount();
+        Orders ord = ordersRepo.findByAccount(account);
+        List<OrdersItem> ordItems = new ArrayList<>();
+        if (ord == null) {
+            ord = new Orders();
+            ord.setAccount(account);
+        } else {
+
+        }
         return null;
     }
 }

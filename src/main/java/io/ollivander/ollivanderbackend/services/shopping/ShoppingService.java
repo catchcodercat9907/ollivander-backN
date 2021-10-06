@@ -1,9 +1,15 @@
 package io.ollivander.ollivanderbackend.services.shopping;
 
+import io.ollivander.ollivanderbackend.common.BaseException;
 import io.ollivander.ollivanderbackend.common.NotEnoughProductsInStockException;
+import io.ollivander.ollivanderbackend.model.dto.CartItemRequest;
+import io.ollivander.ollivanderbackend.model.dto.CartItemResponse;
+import io.ollivander.ollivanderbackend.model.dto.CartResponse;
+import io.ollivander.ollivanderbackend.model.dto.OrdersResponse;
+import io.ollivander.ollivanderbackend.model.entities.Account;
 import io.ollivander.ollivanderbackend.model.entities.Product;
 
-import java.math.BigDecimal;
+import java.util.List;
 import java.util.Map;
 
 public interface ShoppingService {
@@ -17,4 +23,12 @@ public interface ShoppingService {
     void checkout() throws NotEnoughProductsInStockException;
 
     Double getTotal();
+
+    CartResponse getAccountCart(Account account) throws BaseException;
+
+    CartItemResponse getAccountCartItem(Account account) throws BaseException;
+
+    CartResponse createCart(Account account);
+
+    OrdersResponse createOrders(List<CartItemRequest> request);
 }

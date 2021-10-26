@@ -38,6 +38,14 @@ dependencies {
 
     implementation group: 'org.apache.tomcat', name: 'tomcat-jdbc', version: '9.0.12'
 
+    // https://mvnrepository.com/artifact/commons-lang/commons-lang
+    implementation 'commons-lang:commons-lang:2.6'
+
+    // https://mvnrepository.com/artifact/org.projectlombok/lombok
+    compileOnly 'org.projectlombok:lombok:1.18.12'
+    annotationProcessor 'org.projectlombok:lombok:1.18.12'
+
+
 //    implementation group: 'org.springframework.data', name: 'spring-data-commons', version: '2.1.0.RELEASE'
 
     // jwt

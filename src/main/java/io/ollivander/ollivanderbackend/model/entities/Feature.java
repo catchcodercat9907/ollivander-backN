@@ -7,8 +7,15 @@ import javax.persistence.*;
 @Table(name = "feature")
 public class Feature implements java.io.Serializable {
 
+    public static final String COMMODITY_KEY = "COMMODITY_KEY";
+    public static final String CUSTOMER_CARE_KEY = "CUSTOMER_CARE_KEY";
+    public static final String SELL_KEY = "SELL_KEY";
+    public static final String PAYMENT_KEY = "PAYMENT_KEY";
+
     public static final Integer SELL = 1;
     public static final Integer PAYMENT = 2;
+    public static final Integer COMMODITY = 3;
+    public static final Integer CUSTOMER_CARE = 4;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -23,13 +23,13 @@ public class Transaction {
     private String code;
 
     @Column(name = "type", columnDefinition = "SMALLINT")
-    private Integer type;
+    private Integer type;   // the type of order transaction can be either Credit or Debit
 
     @Column(name = "mode", columnDefinition = "SMALLINT")
-    private Integer mode;
+    private Integer mode;   // the mode of the order transaction: OFFLINE, CASH ON DELIVERY, CHEQUE, DRAFT, WIRED, ONLINE
 
     @Column(name = "status", columnDefinition = "SMALLINT")
-    private Integer status;
+    private Integer status; // the status of the order transaction: NEW, CANCELLED, FAILED, PENDING, DECLINED, REJECTED, SUCCESS
 
     @Column(name = "createdAt")
     private Date createdAt;

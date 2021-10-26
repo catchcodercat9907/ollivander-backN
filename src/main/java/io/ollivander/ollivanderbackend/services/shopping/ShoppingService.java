@@ -30,5 +30,7 @@ public interface ShoppingService {
 
     CartResponse createCart(Account account);
 
-    OrdersResponse createOrders(List<CartItemRequest> request);
+    void createOrders(List<CartItemRequest> request) throws BaseException;
+
+    void updateOrders(List<CartItemRequest> request) throws BaseException;
 }

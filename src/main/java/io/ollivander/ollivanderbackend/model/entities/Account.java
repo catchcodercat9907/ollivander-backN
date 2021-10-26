@@ -2,7 +2,9 @@ package io.ollivander.ollivanderbackend.model.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import org.springframework.security.core.GrantedAuthority;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
+import org.springframework.util.CollectionUtils;
 
 import javax.persistence.*;
 import java.util.*;
@@ -66,15 +68,15 @@ public class Account {
             @JoinColumn(name = "role_id", nullable = false, updatable = true) })
     private Set<Role> roles = new HashSet<>();
 
-//    @JsonIgnore
-//    @OneToMany(fetch = FetchType.EAGER, mappedBy = "account", orphanRemoval = true)
-//    @Cascade({ org.hibernate.annotations.CascadeType.ALL })
-//    private Set<AccountPermission> accountPermission = new HashSet<>();
-//
-//    @JsonIgnore
-//    @OneToMany(fetch = FetchType.EAGER, mappedBy = "account", orphanRemoval = true)
-//    @Cascade({ org.hibernate.annotations.CascadeType.ALL })
-//    private Set<FeatureAccountSetting> featureAccountSettings = new HashSet<>();
+    @JsonIgnore
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "account", orphanRemoval = true)
+    @Cascade({ CascadeType.ALL })
+    private Set<AccountPermission> accountPermission = new HashSet<>();
+
+    @JsonIgnore
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "account", orphanRemoval = true)
+    @Cascade({ CascadeType.ALL })
+    private Set<FeatureAccountSetting> featureAccountSettings = new HashSet<>();
 
     public Account() {
     }
@@ -82,6 +84,10 @@ public class Account {
     public Account(String username, String password) {
         this.username = username;
         this.password = password;
+    }
+
+    public Account(Integer accountId) {
+        this.id = id;
     }
 
     public Integer getId() {
@@ -210,6 +216,61 @@ public class Account {
 
     public void setEmailBackup(String emailBackup) {
         this.emailBackup = emailBackup;
+    }
+
+    public Set<AccountPermission> getAccountPermission() {
+        return accountPermission;
+    }
+
+    @Transient
+    public Set<AccountPermission> getAccountPermission(Integer accountId) {
+
+        Set<AccountPermission> permissions = new HashSet<>();
+        if (!CollectionUtils.isEmpty(accountPermission)) {
+            for (AccountPermission ap : accountPermission) {
+                if (ap.getAccount().getId().equals(accountId)) {
+                    permissions.add(ap);
+                }
+            }
+        }
+        return permissions;
+    }
+
+    @Transient
+    public void updatePermission(Feature feature, Integer permission, Account account) {
+
+        // get all permissions by all sponsor
+        // ( side effect apply directly to field this.accountPermission
+        Set<AccountPermission> allPermisions = this.accountPermission;
+
+        Iterator<AccountPermission> iterator = allPermisions.iterator();
+        AccountPermission newPermission = null;
+
+        // will update or add new if not existed
+        boolean found = false;
+        while (iterator.hasNext()) {
+            AccountPermission existedPermission = iterator.next();
+
+            // if update for specific sponsor
+            if (account != null && existedPermission.getAccount() != null
+                    && !account.equals(existedPermission.getAccount())) {
+                continue;
+            }
+
+            // if feature found then create new from existing with new value
+            if (existedPermission.getFeature().getId().equals(feature.getId())) {
+                // update permission value
+                existedPermission.setPermission(permission);
+                found = true;
+                break;
+            }
+        }
+
+        // add new account permission if not found
+        if (found == false) {
+            newPermission = new AccountPermission(this, feature, permission);
+            allPermisions.add(newPermission);
+        }
     }
 
     @JsonIgnore

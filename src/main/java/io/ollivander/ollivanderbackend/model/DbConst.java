@@ -19,4 +19,7 @@ public interface DbConst {
     public static final String STARTS_AT = "startsAt";
     public static final String ENDS_AT = "endsAt";
     public static final String URL = "url";
+    public static final String FEATURE = "feature";
+    public static final String PERMISSION = "permission";
+    public static final String PERMISSIONS = "permissions";
 }

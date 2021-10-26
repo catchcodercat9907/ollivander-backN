@@ -8,6 +8,19 @@ import javax.persistence.*;
 @Entity
 @Table(name = "account_permission")
 public class AccountPermission implements java.io.Serializable {
+
+    public static final Integer VIEW = 8;
+
+    public static final Integer CREATE = 4;
+
+    public static final Integer UPDATE = 2;
+
+    public static final Integer DELETE = 1;
+
+    public static final Integer ASSIGNABLE = 0;
+
+    public static final Integer FULL_PERMISSION = VIEW + CREATE + UPDATE + DELETE;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", unique = true, nullable = false)
@@ -59,4 +72,20 @@ public class AccountPermission implements java.io.Serializable {
     public void setPermission(Integer permission) {
         this.permission = permission;
     }
+
+    public AccountPermission(Integer id, Integer accountId, Integer featureId, String featureKey, Integer permission) {
+        this.id = id;
+        this.account = new Account(accountId);
+        this.feature = new Feature();
+        this.feature.setId(featureId);
+        this.feature.setFeatureKey(featureKey);
+        this.permission = permission;
+    }
+
+    public AccountPermission(Account account, Feature feature, Integer permission) {
+        this.account = account;
+        this.feature = feature;
+        this.permission = permission;
+    }
+
 }

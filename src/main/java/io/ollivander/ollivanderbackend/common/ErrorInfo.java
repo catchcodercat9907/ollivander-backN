@@ -10,6 +10,7 @@ import java.util.Properties;
 
 public class ErrorInfo {
     public static final int UNKNOWN_ERROR_CODE = 1001;
+    public static final int FIELD_ERROR_CODE = 1002;
 
     private static final Logger logger = LoggerFactory.getLogger(ErrorInfo.class);
 
@@ -60,7 +61,18 @@ public class ErrorInfo {
     public static final ErrorInfo PRODUCT_NOT_FOUND = new ErrorInfo(1,
             properties.getProperty("product.not.found"));
 
-    public static final ErrorInfo ACCOUNT_NOT_FOUND = new ErrorInfo(1,
+    public static final ErrorInfo ACCOUNT_NOT_FOUND = new ErrorInfo(2,
             properties.getProperty("account.not.found"));
+
+    public static final ErrorInfo QUANTITY_NOT_VALID = new ErrorInfo(3,
+            properties.getProperty("quantity.not.valid"));
+
+    public static final ErrorInfo ACCESS_DENIED_ERROR = new ErrorInfo(4,
+            properties.getProperty("access.denied.error"));
+
+    public static final ErrorInfo FEATURE_NOT_FOUND = new ErrorInfo(5,
+            properties.getProperty("feature.not.found"));
+
+    /* Pls put code incrementing by 1 */
 
 }

@@ -18,4 +18,7 @@ public interface ProductRepository extends JpaRepository<Product, Integer>, Crud
 
     @Query("SELECT p FROM Product p WHERE p.id IN (:productIds)")
     List<Product> getProductByRequest(@Param("productIds") Collection<Integer> productIds);
+
+    @Query("SELECT p FROM Product p WHERE p.slug like ?1")
+    Product getDetailBySlug(String slug);
 }

@@ -78,7 +78,7 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public boolean updateStaffPermission(Account account, List<PermissionOptions> rqPermissions, String position, Integer staffId) {
-// store current feature and permission (by current trainer) to check
+        // store current feature and permission (by current account) to check
         // data is changed later
         Set<AccountPermission> grantedPermissions = account.getAccountPermission(account.getId());
         Map<Integer, Integer> originPermission = new HashMap<>();

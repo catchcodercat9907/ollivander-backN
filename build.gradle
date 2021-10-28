@@ -45,6 +45,13 @@ dependencies {
     compileOnly 'org.projectlombok:lombok:1.18.12'
     annotationProcessor 'org.projectlombok:lombok:1.18.12'
 
+    // https://mvnrepository.com/artifact/org.springframework/spring-context-support
+    implementation 'org.springframework:spring-context-support:5.2.1.RELEASE'
+
+    // https://mvnrepository.com/artifact/net.sf.ehcache/ehcache
+    implementation 'net.sf.ehcache:ehcache:2.10.3'
+
+
 
 //    implementation group: 'org.springframework.data', name: 'spring-data-commons', version: '2.1.0.RELEASE'
 

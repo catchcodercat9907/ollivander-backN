@@ -69,7 +69,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                .csrf().disable()// avoid CORS and CSRF(Cross Site Request Forgery)
+                .cors().and().csrf().disable()// avoid CORS and CSRF(Cross Site Request Forgery)
                 .httpBasic().disable()
                 .exceptionHandling()
                 .authenticationEntryPoint(authEntryPointJwt)
@@ -77,7 +77,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
-//                .addFilterBefore(corsFilter, ChannelProcessingFilter.class)
+                .addFilterBefore(corsFilter, ChannelProcessingFilter.class)
                 .authorizeRequests()
                 .antMatchers(ApiConst.LOGIN_URL, ApiConst.PUBLIC_URL, ApiConst.LOGOUT_URL).permitAll()
                 .antMatchers("/api/auth/**").permitAll()

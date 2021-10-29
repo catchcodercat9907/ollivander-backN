@@ -21,7 +21,7 @@ public class StaffServiceImpl implements StaffService {
     @Autowired
     private AccountRepository accountRepo;
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+//    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @Override
     @Transactional
     public List<Object> list() throws BaseException {

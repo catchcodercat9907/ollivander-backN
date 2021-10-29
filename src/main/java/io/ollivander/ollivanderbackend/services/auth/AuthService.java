@@ -90,6 +90,7 @@ public class AuthService {
             });
         }
         account.setRoles(roles);
+        account.setDisplayName(request.getDisplayName());
         accountRepo.save(account);
 
         return new MessageResponse("Account registered successfully!");

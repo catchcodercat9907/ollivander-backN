@@ -28,11 +28,11 @@ import javax.annotation.PostConstruct;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Value("${allowed_origin}")
-    private String allowedOrigin;
+//    @Value("${allowed_origin}")
+//    private String allowedOrigin;
 
-    @Autowired
-    private CORSFilter corsFilter;
+//    @Autowired
+//    private CORSFilter corsFilter;
 
     @Autowired
     private UserDetailsServiceImpl userDetailsService;
@@ -45,10 +45,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return new AuthTokenFilter();
     }
 
-    @PostConstruct
-    public void afterCreated() {
-        corsFilter.setAllowedOrigin(allowedOrigin);
-    }
+//    @PostConstruct
+//    public void afterCreated() {
+//        corsFilter.setAllowedOrigin(allowedOrigin);
+//    }
 
     @Override
     public void configure(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
@@ -69,7 +69,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                .cors().and().csrf().disable()// avoid CORS and CSRF(Cross Site Request Forgery)
+                .csrf().disable()// avoid CORS and CSRF(Cross Site Request Forgery)
                 .httpBasic().disable()
                 .exceptionHandling()
                 .authenticationEntryPoint(authEntryPointJwt)
@@ -91,7 +91,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 // all other request need to be authenticated
                 .anyRequest().authenticated()
                 .and()
-                .addFilterBefore(corsFilter, ChannelProcessingFilter.class)
+//                .addFilterBefore(corsFilter, ChannelProcessingFilter.class)
                 // logout handler
 				.logout().logoutUrl(ApiConst.LOGOUT_URL).invalidateHttpSession(false);
 

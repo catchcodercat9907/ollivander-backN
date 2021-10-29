@@ -77,7 +77,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
-                .addFilterBefore(corsFilter, ChannelProcessingFilter.class)
                 .authorizeRequests()
                 .antMatchers(ApiConst.LOGIN_URL, ApiConst.PUBLIC_URL, ApiConst.LOGOUT_URL).permitAll()
                 .antMatchers("/api/auth/**").permitAll()
@@ -90,9 +89,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/product/**").permitAll()
 
                 // all other request need to be authenticated
-                .anyRequest().fullyAuthenticated()
-
+                .anyRequest().authenticated()
                 .and()
+                .addFilterBefore(corsFilter, ChannelProcessingFilter.class)
                 // logout handler
 				.logout().logoutUrl(ApiConst.LOGOUT_URL).invalidateHttpSession(false);
 

@@ -30,7 +30,7 @@ public class CORSFilter extends GenericFilterBean {
         HttpServletRequest request = (HttpServletRequest) req;
 
         if (ObjectUtils.isEmpty(response.getHeader("Access-Control-Allow-Origin"))) {
-            response.setHeader("Access-Control-Allow-Origin", allowedOrigin);
+            response.setHeader("Access-Control-Allow-Origin", getAllowedOrigin());
         }
 
         response.setHeader("Access-Control-Allow-Methods", "POST, PUT, GET, OPTIONS, DELETE");

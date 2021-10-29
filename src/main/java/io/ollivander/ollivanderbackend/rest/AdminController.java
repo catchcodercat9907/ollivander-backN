@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
-@CrossOrigin(allowedHeaders = "*")
 @RestController
 @RequestMapping(value = "/admin")
 public class AdminController {

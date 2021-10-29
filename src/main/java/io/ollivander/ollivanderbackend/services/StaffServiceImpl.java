@@ -21,12 +21,12 @@ public class StaffServiceImpl implements StaffService {
     @Autowired
     private AccountRepository accountRepo;
 
-//    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @Override
     @Transactional
     public List<Object> list() throws BaseException {
 
-        Account account = SecurityContextHelper.getCurrentAccount();
+//        Account account = SecurityContextHelper.getCurrentAccount();
 
         List<Account> staffs = accountRepo.findAccountByRole(Role.ROLE_STAFF);
         List<Object> simplifyStaffs = new ArrayList<>();

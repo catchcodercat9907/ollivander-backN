@@ -13,8 +13,11 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class CORSFilter extends GenericFilterBean {
+    public static final String CUSTOM_CORS_FILTER = "customCorsFilter";
 
     private String allowedOrigin;
+
+    public CORSFilter() {}
 
     public CORSFilter(String allowedOrigin) {
         super();
@@ -39,5 +42,13 @@ public class CORSFilter extends GenericFilterBean {
         if (!"OPTIONS".equals(request.getMethod())) {
             chain.doFilter(req, res);
         }
+    }
+
+    public String getAllowedOrigin() {
+        return allowedOrigin;
+    }
+
+    public void setAllowedOrigin(String allowedOrigin) {
+        this.allowedOrigin = allowedOrigin;
     }
 }

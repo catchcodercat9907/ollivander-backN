@@ -5,6 +5,7 @@ import io.ollivander.ollivanderbackend.security.RestAuthenticationEntryPoint;
 import io.ollivander.ollivanderbackend.security.AuthTokenFilter;
 import io.ollivander.ollivanderbackend.security.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -20,12 +21,19 @@ import org.springframework.security.web.access.channel.ChannelProcessingFilter;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.csrf.CsrfFilter;
 
+import javax.annotation.PostConstruct;
+
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private String allowedOrigin = "*";
+    @Value("${allowed_origin}")
+    private String allowedOrigin;
+
+    @Autowired
+    private CORSFilter corsFilter;
+
     @Autowired
     private UserDetailsServiceImpl userDetailsService;
 
@@ -35,6 +43,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public AuthTokenFilter authenticationJwtTokenFilter() {
         return new AuthTokenFilter();
+    }
+
+    @PostConstruct
+    public void afterCreated() {
+        corsFilter.setAllowedOrigin(allowedOrigin);
     }
 
     @Override
@@ -56,7 +69,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                .cors().disable().csrf().disable()// avoid CORS and CSRF(Cross Site Request Forgery)
+                .cors().and().csrf().disable()// avoid CORS and CSRF(Cross Site Request Forgery)
                 .httpBasic().disable()
                 .exceptionHandling()
                 .authenticationEntryPoint(authEntryPointJwt)
@@ -64,6 +77,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
+                .addFilterBefore(corsFilter, ChannelProcessingFilter.class)
                 .authorizeRequests()
                 .antMatchers(ApiConst.LOGIN_URL, ApiConst.PUBLIC_URL, ApiConst.LOGOUT_URL).permitAll()
                 .antMatchers("/api/auth/**").permitAll()
@@ -79,7 +93,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest().fullyAuthenticated()
 
                 .and()
-                .addFilterBefore(new CORSFilter(allowedOrigin), ChannelProcessingFilter.class)
                 // logout handler
 				.logout().logoutUrl(ApiConst.LOGOUT_URL).invalidateHttpSession(false);
 

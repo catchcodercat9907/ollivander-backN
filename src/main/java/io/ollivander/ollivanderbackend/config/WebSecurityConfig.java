@@ -25,6 +25,7 @@ import org.springframework.security.web.csrf.CsrfFilter;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
+    private String allowedOrigin = "*";
     @Autowired
     private UserDetailsServiceImpl userDetailsService;
 
@@ -78,6 +79,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest().fullyAuthenticated()
 
                 .and()
+                .addFilterBefore(new CORSFilter(allowedOrigin), ChannelProcessingFilter.class)
                 // logout handler
 				.logout().logoutUrl(ApiConst.LOGOUT_URL).invalidateHttpSession(false);
 
